@@ -46,7 +46,8 @@ function zaw-callback-open-file() {
     if [[ -d "$1" ]]; then
         zaw zaw-src-open-file "$1"
     else
-        BUFFER="gnome-open ${(q)1}"
+        #BUFFER="gnome-open ${(q)1}"
+        BUFFER="$EDITOR ${(q)1}"
         accept-line
     fi
 }

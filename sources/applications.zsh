@@ -10,8 +10,14 @@ function zaw-src-applications() {
 
     local d
     local -a match mbegin mend
-    for d in /usr/share/applications/*.desktop; do
+    #for d in /usr/share/applications/*.desktop; do
+    for d in `brew list`; do
         local name="" comment="" exec_="" terminal=0 no_display=0
+        # 2012-12-03 - 13:00 changes for OSX using brew
+          name="$d" 
+          exec_="$d"
+          comment_="$d"
+          terminal=1
         while read line; do
             case "${line}" in
                 Name=(#b)(*))
@@ -29,6 +35,15 @@ function zaw-src-applications() {
 
                 NoDisplay=true)
                     no_display=1
+                    ;;
+                (#b)(*))
+                    exec_="${match[1]}"
+                    exec_="${line}"
+                    ;;
+                (*))
+                    # trying out since it aint workin in osx 2012-12-03 - 12:02 
+                    name="${line}"
+                    exec_="${match[1]}"
                     ;;
             esac
         done < "${d}"
